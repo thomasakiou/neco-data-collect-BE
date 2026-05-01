@@ -45,3 +45,11 @@ class BECEModel(Base):
     category = Column(String, nullable=True)
     accd_year = Column(String, nullable=True)
     lga = Column(String, index=True, nullable=True)
+
+class LGAModel(Base):
+    __tablename__ = "lgas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    state_name = Column(String, nullable=False)
+    state_code = Column(String, index=True, nullable=False)
+    lga_name = Column(String, index=True, nullable=False)

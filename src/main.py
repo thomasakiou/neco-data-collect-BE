@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api.v1.endpoints import auth, ssce, bece
+from src.api.v1.endpoints import auth, ssce, bece, lga
 from src.core.config import settings
 from src.infrastructure.db.session import SessionLocal
 from src.infrastructure.repositories.user_repository_impl import SQLAlchemyUserRepository
@@ -51,6 +51,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
 app.include_router(ssce.router, prefix="/api/v1/ssce", tags=["ssce"])
 app.include_router(bece.router, prefix="/api/v1/bece", tags=["bece"])
+app.include_router(lga.router, prefix="/api/v1/lga", tags=["lga"])
 
 @app.get("/")
 def read_root():

@@ -117,7 +117,10 @@ async def upload_bece(
         raise HTTPException(status_code=400, detail="Only CSV files are supported")
     
     content = await file.read()
-    decoded = content.decode('utf-8')
+    try:
+        decoded = content.decode('utf-8')
+    except UnicodeDecodeError:
+        decoded = content.decode('latin-1')
     reader = csv.DictReader(io.StringIO(decoded))
     
     bece_list = []
