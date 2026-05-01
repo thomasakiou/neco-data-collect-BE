@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.api.v1.endpoints import auth
+from src.api.v1.endpoints import auth, ssce, bece
 from src.core.config import settings
 from src.infrastructure.db.session import SessionLocal
 from src.infrastructure.repositories.user_repository_impl import SQLAlchemyUserRepository
@@ -36,7 +36,12 @@ app = FastAPI(title=settings.PROJECT_NAME, lifespan=lifespan)
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"],
+    allow_origins=[
+        "http://localhost:5173", 
+        "http://localhost:5174", 
+        "http://localhost:5175",
+        "https://necodata.netlify.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -44,6 +49,8 @@ app.add_middleware(
 
 # Routes
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
+app.include_router(ssce.router, prefix="/api/v1/ssce", tags=["ssce"])
+app.include_router(bece.router, prefix="/api/v1/bece", tags=["bece"])
 
 @app.get("/")
 def read_root():

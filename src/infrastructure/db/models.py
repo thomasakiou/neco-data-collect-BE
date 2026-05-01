@@ -11,3 +11,37 @@ class UserModel(Base):
     state_name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
+
+class SSCEModel(Base):
+    __tablename__ = "ssce"
+
+    id = Column(Integer, primary_key=True, index=True)
+    state_code = Column(String, index=True, nullable=False)
+    state_name = Column(String, nullable=False)
+    sch_num = Column(String, index=True, nullable=False)
+    sch_name = Column(String, nullable=False)
+    cust_code = Column(String, nullable=False)
+    cust_name = Column(String, nullable=False)
+    cust_town = Column(String, nullable=False)
+    status = Column(String, nullable=True)
+    type = Column(String, nullable=True)
+    category = Column(String, nullable=True)
+    accd_year = Column(String, nullable=True)
+    lga = Column(String, index=True, nullable=True)
+
+class BECEModel(Base):
+    __tablename__ = "bece"
+
+    id = Column(Integer, primary_key=True, index=True)
+    state_code = Column(String, index=True, nullable=False)
+    state_name = Column(String, nullable=False)
+    sch_num = Column(String, index=True, nullable=False)
+    sch_name = Column(String, nullable=False)
+    cust_code = Column(String, nullable=False)
+    cust_name = Column(String, nullable=False)
+    cust_town = Column(String, nullable=False)
+    status = Column(String, nullable=True)
+    type = Column(String, nullable=True)
+    category = Column(String, nullable=True)
+    accd_year = Column(String, nullable=True)
+    lga = Column(String, index=True, nullable=True)

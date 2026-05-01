@@ -3,6 +3,7 @@
 node_modules
 .env
 .venv
+venv
 .codex
 out
 dist
