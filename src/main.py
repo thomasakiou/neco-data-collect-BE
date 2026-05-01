@@ -40,7 +40,7 @@ app.add_middleware(
         "http://localhost:5173", 
         "http://localhost:5174", 
         "http://localhost:5175",
-        "https://neco-data-collect.netlify.app"
+        "https://necodata.netlify.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
