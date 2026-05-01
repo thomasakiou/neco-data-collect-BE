@@ -1,0 +1,15 @@
+[Unit]
+Description=NECO Data Collection Backend API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/root/neco-data-collect-BE
+ExecStart=/root/neco-data-collect-BE/venv/bin/uvicorn src.main:app --host 0.0.0.0 --port 8010 --root-path /data-app --proxy-headers --forwarded-allow-ips="*"
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
