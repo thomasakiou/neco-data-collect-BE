@@ -3,7 +3,7 @@ import io
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, AliasChoices
 from src.infrastructure.db.session import get_db
 from src.infrastructure.repositories.ssce_repository_impl import SQLAlchemySSCERepository
 from src.domain.ssce.entities import SSCE
@@ -25,6 +25,7 @@ class SSCEBase(BaseModel):
     category: Optional[str] = None
     accd_year: Optional[str] = None
     lga: Optional[str] = None
+    sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
 
 class SSCECreate(SSCEBase):
     pass
@@ -42,6 +43,7 @@ class SSCEUpdate(BaseModel):
     category: Optional[str] = None
     accd_year: Optional[str] = None
     lga: Optional[str] = None
+    sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
 
 class SSCEResponse(SSCEBase):
     id: int
@@ -91,7 +93,7 @@ def update_ssce(
     current_user: User = Depends(get_current_user)
 ):
     repo = SQLAlchemySSCERepository(db)
-    updated = repo.update(ssce_id, **data.model_dump(exclude_none=True))
+    updated = repo.update(ssce_id, **data.model_dump(exclude_unset=True))
     if not updated:
         raise HTTPException(status_code=404, detail="SSCE record not found")
     return updated
@@ -137,7 +139,8 @@ async def upload_ssce(
             type=row.get('type'),
             category=row.get('category'),
             accd_year=row.get('accd_year'),
-            lga=row.get('lga')
+            lga=row.get('lga'),
+            sch_email=row.get('sch_email')
         ))
     
     repo = SQLAlchemySSCERepository(db)

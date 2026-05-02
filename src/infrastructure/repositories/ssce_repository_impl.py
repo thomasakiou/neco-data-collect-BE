@@ -27,7 +27,8 @@ class SQLAlchemySSCERepository(SSCERepository):
             type=ssce.type,
             category=ssce.category,
             accd_year=ssce.accd_year,
-            lga=ssce.lga
+            lga=ssce.lga,
+            sch_email=ssce.sch_email
         )
         if ssce.id:
             model.id = ssce.id
@@ -76,7 +77,8 @@ class SQLAlchemySSCERepository(SSCERepository):
                 type=ssce.type,
                 category=ssce.category,
                 accd_year=ssce.accd_year,
-                lga=ssce.lga
+                lga=ssce.lga,
+                sch_email=ssce.sch_email
             )
             for ssce in ssce_list
         ]
@@ -103,5 +105,6 @@ class SQLAlchemySSCERepository(SSCERepository):
             type=model.type,
             category=model.category,
             accd_year=model.accd_year,
-            lga=model.lga
+            lga=model.lga,
+            sch_email=model.sch_email
         )

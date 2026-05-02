@@ -15,4 +15,5 @@ class BECE:
     category: Optional[str] = None
     accd_year: Optional[str] = None
     lga: Optional[str] = None
+    sch_email: Optional[str] = None
     id: Optional[int] = None
