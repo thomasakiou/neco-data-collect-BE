@@ -29,6 +29,7 @@ class SSCEModel(Base):
     accd_year = Column(String, nullable=True)
     lga = Column(String, index=True, nullable=True)
     sch_email = Column(String, nullable=True)
+    accreditation_type = Column(String, nullable=True)
 
 class BECEModel(Base):
     __tablename__ = "bece"
@@ -47,6 +48,7 @@ class BECEModel(Base):
     accd_year = Column(String, nullable=True)
     lga = Column(String, index=True, nullable=True)
     sch_email = Column(String, nullable=True)
+    accreditation_type = Column(String, nullable=True)
 
 class LGAModel(Base):
     __tablename__ = "lgas"
