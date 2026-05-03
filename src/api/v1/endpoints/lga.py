@@ -16,6 +16,7 @@ class LGABase(BaseModel):
     state_name: str
     state_code: str
     lga_name: str
+    lga_code: str
 
 class LGACreate(LGABase):
     pass
@@ -24,6 +25,7 @@ class LGAUpdate(BaseModel):
     state_name: Optional[str] = None
     state_code: Optional[str] = None
     lga_name: Optional[str] = None
+    lga_code: Optional[str] = None
 
 class LGAResponse(LGABase):
     id: int
@@ -113,7 +115,8 @@ async def upload_lgas(
         lga_list.append(LGA(
             state_name=row.get('State') or row.get('state_name'),
             state_code=row.get('state_code'),
-            lga_name=row.get('LGA') or row.get('lga_name')
+            lga_name=row.get('LGA') or row.get('lga_name'),
+            lga_code=row.get('lga_code')
         ))
     
     if not lga_list:

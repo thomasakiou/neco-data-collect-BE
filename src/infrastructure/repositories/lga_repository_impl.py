@@ -18,7 +18,8 @@ class SQLAlchemyLGARepository(LGARepository):
         model = LGAModel(
             state_name=lga.state_name,
             state_code=lga.state_code,
-            lga_name=lga.lga_name
+            lga_name=lga.lga_name,
+            lga_code=lga.lga_code
         )
         if lga.id:
             model.id = lga.id
@@ -58,7 +59,8 @@ class SQLAlchemyLGARepository(LGARepository):
             LGAModel(
                 state_name=lga.state_name,
                 state_code=lga.state_code,
-                lga_name=lga.lga_name
+                lga_name=lga.lga_name,
+                lga_code=lga.lga_code
             )
             for lga in lga_list
         ]
@@ -76,5 +78,6 @@ class SQLAlchemyLGARepository(LGARepository):
             id=model.id,
             state_name=model.state_name,
             state_code=model.state_code,
-            lga_name=model.lga_name
+            lga_name=model.lga_name,
+            lga_code=model.lga_code
         )

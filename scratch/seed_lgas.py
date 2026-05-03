@@ -8,10 +8,16 @@ sys.path.append(os.getcwd())
 from src.infrastructure.db.session import SessionLocal
 from src.infrastructure.repositories.lga_repository_impl import SQLAlchemyLGARepository
 from src.domain.lga.entities import LGA
+from src.infrastructure.db.models import LGAModel
 
 def seed_lgas():
     db = SessionLocal()
     repo = SQLAlchemyLGARepository(db)
+    
+    # Clear existing LGAs
+    print("Clearing existing LGA records...")
+    db.query(LGAModel).delete()
+    db.commit()
     
     csv_path = 'nigeria_lgas.csv'
     if not os.path.exists(csv_path):
@@ -25,7 +31,8 @@ def seed_lgas():
             lga_list.append(LGA(
                 state_name=row['State'],
                 state_code=row['state_code'],
-                lga_name=row['LGA']
+                lga_name=row['LGA'],
+                lga_code=row['lga_code']
             ))
     
     if lga_list:

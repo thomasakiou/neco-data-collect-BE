@@ -30,6 +30,7 @@ class SSCEModel(Base):
     lga = Column(String, index=True, nullable=True)
     sch_email = Column(String, nullable=True)
     accreditation_type = Column(String, nullable=True)
+    lga_code = Column(String, index=True, nullable=True)
 
 class BECEModel(Base):
     __tablename__ = "bece"
@@ -49,6 +50,7 @@ class BECEModel(Base):
     lga = Column(String, index=True, nullable=True)
     sch_email = Column(String, nullable=True)
     accreditation_type = Column(String, nullable=True)
+    lga_code = Column(String, index=True, nullable=True)
 
 class LGAModel(Base):
     __tablename__ = "lgas"
@@ -57,3 +59,4 @@ class LGAModel(Base):
     state_name = Column(String, nullable=False)
     state_code = Column(String, index=True, nullable=False)
     lga_name = Column(String, index=True, nullable=False)
+    lga_code = Column(String, index=True, nullable=True)

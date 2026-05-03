@@ -28,7 +28,9 @@ class SQLAlchemySSCERepository(SSCERepository):
             category=ssce.category,
             accd_year=ssce.accd_year,
             lga=ssce.lga,
-            sch_email=ssce.sch_email
+            sch_email=ssce.sch_email,
+            accreditation_type=ssce.accreditation_type,
+            lga_code=ssce.lga_code
         )
         if ssce.id:
             model.id = ssce.id
@@ -78,7 +80,9 @@ class SQLAlchemySSCERepository(SSCERepository):
                 category=ssce.category,
                 accd_year=ssce.accd_year,
                 lga=ssce.lga,
-                sch_email=ssce.sch_email
+                sch_email=ssce.sch_email,
+                accreditation_type=ssce.accreditation_type,
+                lga_code=ssce.lga_code
             )
             for ssce in ssce_list
         ]
@@ -106,5 +110,7 @@ class SQLAlchemySSCERepository(SSCERepository):
             category=model.category,
             accd_year=model.accd_year,
             lga=model.lga,
-            sch_email=model.sch_email
+            sch_email=model.sch_email,
+            accreditation_type=model.accreditation_type,
+            lga_code=model.lga_code
         )

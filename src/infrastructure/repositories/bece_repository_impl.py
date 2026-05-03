@@ -28,7 +28,9 @@ class SQLAlchemyBECERepository(BECERepository):
             category=bece.category,
             accd_year=bece.accd_year,
             lga=bece.lga,
-            sch_email=bece.sch_email
+            sch_email=bece.sch_email,
+            accreditation_type=bece.accreditation_type,
+            lga_code=bece.lga_code
         )
         if bece.id:
             model.id = bece.id
@@ -78,7 +80,9 @@ class SQLAlchemyBECERepository(BECERepository):
                 category=bece.category,
                 accd_year=bece.accd_year,
                 lga=bece.lga,
-                sch_email=bece.sch_email
+                sch_email=bece.sch_email,
+                accreditation_type=bece.accreditation_type,
+                lga_code=bece.lga_code
             )
             for bece in bece_list
         ]
@@ -106,5 +110,7 @@ class SQLAlchemyBECERepository(BECERepository):
             category=model.category,
             accd_year=model.accd_year,
             lga=model.lga,
-            sch_email=model.sch_email
+            sch_email=model.sch_email,
+            accreditation_type=model.accreditation_type,
+            lga_code=model.lga_code
         )

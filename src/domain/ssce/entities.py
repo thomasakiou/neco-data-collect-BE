@@ -17,4 +17,5 @@ class SSCE:
     lga: Optional[str] = None
     sch_email: Optional[str] = None
     accreditation_type: Optional[str] = None
+    lga_code: Optional[str] = None
     id: Optional[int] = None

@@ -27,6 +27,7 @@ class BECEBase(BaseModel):
     lga: Optional[str] = None
     sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
     accreditation_type: Optional[str] = None
+    lga_code: Optional[str] = None
 
 class BECECreate(BECEBase):
     pass
@@ -46,6 +47,7 @@ class BECEUpdate(BaseModel):
     lga: Optional[str] = None
     sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
     accreditation_type: Optional[str] = None
+    lga_code: Optional[str] = None
 
 class BECEResponse(BECEBase):
     id: int
@@ -143,7 +145,8 @@ async def upload_bece(
             accd_year=row.get('accd_year'),
             lga=row.get('lga'),
             sch_email=row.get('sch_email'),
-            accreditation_type=row.get('accreditation_type')
+            accreditation_type=row.get('accreditation_type'),
+            lga_code=row.get('lga_code')
         ))
     
     repo = SQLAlchemyBECERepository(db)
