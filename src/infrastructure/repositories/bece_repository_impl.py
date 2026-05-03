@@ -2,7 +2,7 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from src.domain.bece.entities import BECE
 from src.domain.bece.repository import BECERepository
-from src.infrastructure.db.models import BECEModel
+from src.infrastructure.db.models import BECEModel, LGAModel
 
 class SQLAlchemyBECERepository(BECERepository):
     def __init__(self, db: Session):
@@ -14,7 +14,20 @@ class SQLAlchemyBECERepository(BECERepository):
             return None
         return self._to_entity(model)
 
+    def _get_lga_code(self, lga_name: str, state_code: str) -> Optional[str]:
+        if not lga_name:
+            return None
+        lga_record = self.db.query(LGAModel).filter(
+            LGAModel.lga_name == lga_name,
+            LGAModel.state_code == state_code
+        ).first()
+        return lga_record.lga_code if lga_record else None
+
     def save(self, bece: BECE) -> BECE:
+        lga_code = bece.lga_code
+        if not lga_code and bece.lga:
+            lga_code = self._get_lga_code(bece.lga, bece.state_code)
+
         model = BECEModel(
             state_code=bece.state_code,
             state_name=bece.state_name,
@@ -30,7 +43,7 @@ class SQLAlchemyBECERepository(BECERepository):
             lga=bece.lga,
             sch_email=bece.sch_email,
             accreditation_type=bece.accreditation_type,
-            lga_code=bece.lga_code
+            lga_code=lga_code
         )
         if bece.id:
             model.id = bece.id
@@ -58,6 +71,12 @@ class SQLAlchemyBECERepository(BECERepository):
         model = self.db.query(BECEModel).filter(BECEModel.id == bece_id).first()
         if not model:
             return None
+        
+        # If lga is being updated but lga_code is not provided, fetch it
+        if 'lga' in kwargs and not kwargs.get('lga_code'):
+            state_code = kwargs.get('state_code') or model.state_code
+            kwargs['lga_code'] = self._get_lga_code(kwargs['lga'], state_code)
+
         for key, value in kwargs.items():
             if hasattr(model, key):
                 setattr(model, key, value)
@@ -66,8 +85,24 @@ class SQLAlchemyBECERepository(BECERepository):
         return self._to_entity(model)
 
     def bulk_create(self, bece_list: List[BECE]) -> int:
-        models = [
-            BECEModel(
+        # Pre-fetch relevant LGA codes to minimize queries
+        unique_lga_state_pairs = set()
+        for bece in bece_list:
+            if not bece.lga_code and bece.lga:
+                unique_lga_state_pairs.add((bece.lga, bece.state_code))
+        
+        lga_code_map = {}
+        if unique_lga_state_pairs:
+            for lga_name, state_code in unique_lga_state_pairs:
+                lga_code_map[(lga_name, state_code)] = self._get_lga_code(lga_name, state_code)
+
+        models = []
+        for bece in bece_list:
+            lga_code = bece.lga_code
+            if not lga_code and bece.lga:
+                lga_code = lga_code_map.get((bece.lga, bece.state_code))
+
+            models.append(BECEModel(
                 state_code=bece.state_code,
                 state_name=bece.state_name,
                 sch_num=bece.sch_num,
@@ -82,10 +117,9 @@ class SQLAlchemyBECERepository(BECERepository):
                 lga=bece.lga,
                 sch_email=bece.sch_email,
                 accreditation_type=bece.accreditation_type,
-                lga_code=bece.lga_code
-            )
-            for bece in bece_list
-        ]
+                lga_code=lga_code
+            ))
+        
         self.db.bulk_save_objects(models)
         self.db.commit()
         return len(models)
