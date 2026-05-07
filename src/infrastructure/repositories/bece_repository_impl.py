@@ -43,7 +43,8 @@ class SQLAlchemyBECERepository(BECERepository):
             lga=bece.lga,
             sch_email=bece.sch_email,
             accreditation_type=bece.accreditation_type,
-            lga_code=lga_code
+            lga_code=lga_code,
+            locality=bece.locality
         )
         if bece.id:
             model.id = bece.id
@@ -117,7 +118,8 @@ class SQLAlchemyBECERepository(BECERepository):
                 lga=bece.lga,
                 sch_email=bece.sch_email,
                 accreditation_type=bece.accreditation_type,
-                lga_code=lga_code
+                lga_code=lga_code,
+                locality=bece.locality
             ))
         
         self.db.bulk_save_objects(models)
@@ -146,5 +148,6 @@ class SQLAlchemyBECERepository(BECERepository):
             lga=model.lga,
             sch_email=model.sch_email,
             accreditation_type=model.accreditation_type,
-            lga_code=model.lga_code
+            lga_code=model.lga_code,
+            locality=model.locality
         )

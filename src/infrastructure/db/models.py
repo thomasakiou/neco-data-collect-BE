@@ -31,6 +31,7 @@ class SSCEModel(Base):
     sch_email = Column(String, nullable=True)
     accreditation_type = Column(String, nullable=True)
     lga_code = Column(String, index=True, nullable=True)
+    locality = Column(String, nullable=True)
 
 class BECEModel(Base):
     __tablename__ = "bece"
@@ -51,6 +52,7 @@ class BECEModel(Base):
     sch_email = Column(String, nullable=True)
     accreditation_type = Column(String, nullable=True)
     lga_code = Column(String, index=True, nullable=True)
+    locality = Column(String, nullable=True)
 
 class LGAModel(Base):
     __tablename__ = "lgas"

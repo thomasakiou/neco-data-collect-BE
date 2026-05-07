@@ -43,7 +43,8 @@ class SQLAlchemySSCERepository(SSCERepository):
             lga=ssce.lga,
             sch_email=ssce.sch_email,
             accreditation_type=ssce.accreditation_type,
-            lga_code=lga_code
+            lga_code=lga_code,
+            locality=ssce.locality
         )
         if ssce.id:
             model.id = ssce.id
@@ -121,7 +122,8 @@ class SQLAlchemySSCERepository(SSCERepository):
                 lga=ssce.lga,
                 sch_email=ssce.sch_email,
                 accreditation_type=ssce.accreditation_type,
-                lga_code=lga_code
+                lga_code=lga_code,
+                locality=ssce.locality
             ))
         
         self.db.bulk_save_objects(models)
@@ -150,5 +152,6 @@ class SQLAlchemySSCERepository(SSCERepository):
             lga=model.lga,
             sch_email=model.sch_email,
             accreditation_type=model.accreditation_type,
-            lga_code=model.lga_code
+            lga_code=model.lga_code,
+            locality=model.locality
         )

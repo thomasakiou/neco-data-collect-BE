@@ -28,6 +28,7 @@ class SSCEBase(BaseModel):
     sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
     accreditation_type: Optional[str] = None
     lga_code: Optional[str] = None
+    locality: Optional[str] = None
 
 class SSCECreate(SSCEBase):
     pass
@@ -48,6 +49,7 @@ class SSCEUpdate(BaseModel):
     sch_email: Optional[str] = Field(None, validation_alias=AliasChoices('sch_email', 'email'))
     accreditation_type: Optional[str] = None
     lga_code: Optional[str] = None
+    locality: Optional[str] = None
 
 class SSCEResponse(SSCEBase):
     id: int
@@ -146,7 +148,8 @@ async def upload_ssce(
             lga=row.get('lga'),
             sch_email=row.get('sch_email'),
             accreditation_type=row.get('accreditation_type'),
-            lga_code=row.get('lga_code')
+            lga_code=row.get('lga_code'),
+            locality=row.get('locality')
         ))
     
     repo = SQLAlchemySSCERepository(db)
